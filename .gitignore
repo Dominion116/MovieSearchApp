@@ -41,3 +41,36 @@ app-example
 # generated native folders
 /ios
 /android
+
+# VSCode
+.vscode/
+
+# Logs
+logs
+*.log
+debug.log
+error.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.AppleDouble
+.LSOverride
+
+# Editor directories and files
+.idea/
+.history/
+.swp
+.swo
+.swn
+.bak
+.tmp
+.temp
+.cache/
+.vscode/

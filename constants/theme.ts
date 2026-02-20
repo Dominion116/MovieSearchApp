@@ -1,41 +1,60 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
 import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
-
 export const Colors = {
+  // Dark cinema palette
+  background: '#0A0A0F',
+  surface: '#13131A',
+  surfaceElevated: '#1C1C26',
+  border: '#2A2A3A',
+
+  // Accent
+  accent: '#E50914',
+  accentSoft: 'rgba(229, 9, 20, 0.15)',
+  accentGlow: 'rgba(229, 9, 20, 0.08)',
+
+  // Gold
+  gold: '#F5C518',
+  goldSoft: 'rgba(245, 197, 24, 0.15)',
+
+  // Text
+  textPrimary: '#FFFFFF',
+  textSecondary: '#A0A0B0',
+  textTertiary: '#5A5A70',
+  textMuted: '#3A3A50',
+
+  // Status
+  success: '#22C55E',
+  warning: '#F59E0B',
+
+  // Gradient stops
+  gradientDark: '#0A0A0F',
+  gradientMid: 'rgba(10, 10, 15, 0.85)',
+  gradientTransparent: 'rgba(10, 10, 15, 0)',
+
+  // Legacy (kept for hook compatibility)
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    text: '#0A0A0F',
+    background: '#FFFFFF',
+    tint: '#E50914',
+    icon: '#5A5A70',
+    tabIconDefault: '#5A5A70',
+    tabIconSelected: '#E50914',
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    text: '#FFFFFF',
+    background: '#0A0A0F',
+    tint: '#E50914',
+    icon: '#A0A0B0',
+    tabIconDefault: '#A0A0B0',
+    tabIconSelected: '#E50914',
   },
 };
 
 export const Fonts = Platform.select({
   ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
     sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
     serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
     rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
     mono: 'ui-monospace',
   },
   default: {
@@ -51,3 +70,20 @@ export const Fonts = Platform.select({
     mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
   },
 });
+
+export const Radius = {
+  sm: 6,
+  md: 10,
+  lg: 16,
+  xl: 24,
+  full: 999,
+};
+
+export const Spacing = {
+  xs: 4,
+  sm: 8,
+  md: 16,
+  lg: 24,
+  xl: 32,
+  xxl: 48,
+};

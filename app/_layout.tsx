@@ -3,6 +3,8 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
+import { WatchlistProvider } from '@/context/watchlist-context';
+
 const CinemaTheme = {
   ...DarkTheme,
   colors: {
@@ -18,23 +20,25 @@ const CinemaTheme = {
 
 export default function RootLayout() {
   return (
-    <ThemeProvider value={CinemaTheme}>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          animation: 'fade_from_bottom',
-          contentStyle: { backgroundColor: '#0A0A0F' },
-        }}>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="[imdbID]"
-          options={{
+    <WatchlistProvider>
+      <ThemeProvider value={CinemaTheme}>
+        <Stack
+          screenOptions={{
             headerShown: false,
-            animation: 'slide_from_right',
-          }}
-        />
-      </Stack>
-      <StatusBar style="light" />
-    </ThemeProvider>
+            animation: 'fade_from_bottom',
+            contentStyle: { backgroundColor: '#0A0A0F' },
+          }}>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="[imdbID]"
+            options={{
+              headerShown: false,
+              animation: 'slide_from_right',
+            }}
+          />
+        </Stack>
+        <StatusBar style="light" />
+      </ThemeProvider>
+    </WatchlistProvider>
   );
 }

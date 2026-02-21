@@ -37,6 +37,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="watchlist"
+        options={{
+          title: 'Watchlist',
+          tabBarIcon: ({ color, size }) => (
+            <IconSymbol size={size} name="star.fill" color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

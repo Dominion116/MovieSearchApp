@@ -3,15 +3,17 @@ import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Image,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Colors, Radius, Spacing } from '@/constants/theme';
+import { useWatchlist } from '@/context/watchlist-context';
 
 const OMDB_API_KEY = 'trilogy';
 
@@ -78,6 +80,20 @@ export default function MovieDetailScreen() {
   const [movie, setMovie] = useState<MovieDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const { isInWatchlist, toggleWatchlist } = useWatchlist();
+
+  const isSaved = movie ? isInWatchlist(imdbID as string) : false;
+
+  const handleToggle = () => {
+    if (!movie) return;
+    toggleWatchlist({
+      imdbID: imdbID as string,
+      Title: movie.Title,
+      Year: movie.Year,
+      Poster: movie.Poster,
+      Type: movie.Type,
+    });
+  };
 
   useEffect(() => {
     if (!imdbID) return;
@@ -104,11 +120,20 @@ export default function MovieDetailScreen() {
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
-      {/* Back Button */}
-      <TouchableOpacity style={styles.backBtn} onPress={() => router.back()} activeOpacity={0.7}>
-        <Text style={styles.backIcon}>←</Text>
-        <Text style={styles.backText}>Back</Text>
-      </TouchableOpacity>
+      {/* Top Bar */}
+      <View style={styles.topBar}>
+        <TouchableOpacity style={styles.backBtn} onPress={() => router.back()} activeOpacity={0.7}>
+          <Text style={styles.backIcon}>←</Text>
+          <Text style={styles.backText}>Back</Text>
+        </TouchableOpacity>
+        {movie && (
+          <TouchableOpacity style={styles.heartBtn} onPress={handleToggle} activeOpacity={0.7}>
+            <Text style={[styles.heartIcon, isSaved && styles.heartSaved]}>
+              {isSaved ? '❤️' : '🤍'}
+            </Text>
+          </TouchableOpacity>
+        )}
+      </View>
 
       {loading && (
         <View style={styles.centered}>
@@ -242,6 +267,21 @@ export default function MovieDetailScreen() {
           </View>
         </ScrollView>
       )}
+
+      {/* Floating save bar */}
+      {movie && (
+        <View style={styles.floatingBar}>
+          <TouchableOpacity
+            style={[styles.floatingBtn, isSaved && styles.floatingBtnSaved]}
+            onPress={handleToggle}
+            activeOpacity={0.8}>
+            <Text style={styles.floatingBtnIcon}>{isSaved ? '❤️' : '🤍'}</Text>
+            <Text style={[styles.floatingBtnText, isSaved && styles.floatingBtnTextSaved]}>
+              {isSaved ? 'Saved to Watchlist' : 'Add to Watchlist'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -252,12 +292,17 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
 
-  // Back button
+  // Top bar
+  topBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+  },
   backBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
     gap: 6,
   },
   backIcon: {
@@ -269,6 +314,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.textPrimary,
     fontWeight: '600',
+  },
+  heartBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: Radius.full,
+    backgroundColor: Colors.surface,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  heartIcon: {
+    fontSize: 20,
+  },
+  heartSaved: {
+    // style marker for saved state (emoji changes)
   },
 
   centered: {
@@ -553,5 +614,44 @@ const styles = StyleSheet.create({
     color: Colors.gold,
     lineHeight: 22,
     fontWeight: '500',
+  },
+
+  // Floating bar
+  floatingBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: Spacing.md,
+    paddingBottom: Platform.OS === 'ios' ? 28 : Spacing.md,
+    backgroundColor: Colors.background,
+    borderTopWidth: 1,
+    borderTopColor: Colors.border,
+  },
+  floatingBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.surface,
+    borderRadius: Radius.full,
+    paddingVertical: 14,
+    gap: 8,
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  floatingBtnSaved: {
+    backgroundColor: Colors.accentSoft,
+    borderColor: 'rgba(229, 9, 20, 0.4)',
+  },
+  floatingBtnIcon: {
+    fontSize: 18,
+  },
+  floatingBtnText: {
+    color: Colors.textPrimary,
+    fontWeight: '700',
+    fontSize: 15,
+  },
+  floatingBtnTextSaved: {
+    color: Colors.accent,
   },
 });

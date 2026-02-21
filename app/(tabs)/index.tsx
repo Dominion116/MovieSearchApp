@@ -19,7 +19,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Colors, Radius, Spacing } from '@/constants/theme';
 
-const OMDB_API_KEY = '1e3e0c1'; // free demo key
+const OMDB_API_KEY = 'trilogy';
 
 // Featured genres / quick search chips
 const QUICK_SEARCHES = ['Action', 'Comedy', 'Horror', 'Sci-Fi', 'Drama', 'Thriller'];

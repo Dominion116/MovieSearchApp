@@ -1,19 +1,19 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Colors, Radius, Spacing } from '@/constants/theme';
 
-const OMDB_API_KEY = '1e3e0c1';
+const OMDB_API_KEY = 'trilogy';
 
 type MovieDetail = {
   Title: string;
